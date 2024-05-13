@@ -100,5 +100,44 @@ function bindDriverWithJob($j_id, $d_id, $c_id)
         $conn->close();
 }
 
+function jobCidCheck($c_id)
+{
+    $servername = "localhost";
+    $dbusername = "root";
+    $dbpassword = "";
+    $dbname = "my_app";
+
+    // Create connection
+    $conn = new mysqli($servername, $dbusername, $dbpassword, $dbname);
+    // Check connection
+    if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+    }
+
+    $sql = "SELECT * FROM jobs WHERE c_id = ?";
+    $stmt = $conn->prepare($sql);
+
+   
+    $stmt->bind_param("s", $c_id);
+
+    
+    $stmt->execute();
+
+  
+    $result = $stmt->get_result();
+
+    if ($result->num_rows > 0) {
+        // Fetching row
+        return true;
+
+    } else {
+        
+        return false;
+    }
+
+    $stmt->close();
+    $conn->close();
+
+}
 
 ?>

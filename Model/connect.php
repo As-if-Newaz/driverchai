@@ -325,4 +325,37 @@ function credentials($username, $password)
     $stmt->close();
     $conn->close();
 }
+
+function referCode($id)
+{
+    $servername = "localhost";
+    $dbusername = "root";
+    $dbpassword = "";
+    $dbname = "my_app";
+
+    // Create connection
+    $conn = new mysqli($servername, $dbusername, $dbpassword, $dbname);
+    // Check connection
+    if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+    }
+
+    $sql = "SELECT * FROM users WHERE id = ?";
+    $stmt = $conn->prepare($sql);
+
+    // Bind parameters
+    $stmt->bind_param("s", $id);
+
+    // Execute the statement
+    $stmt->execute();
+
+    // Store the result
+    $result = $stmt->get_result();
+    $row = $result->fetch_assoc();
+    $code = $row['refCode'];
+    return $code;
+
+}
 ?>
+
+

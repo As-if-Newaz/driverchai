@@ -34,14 +34,15 @@ require '../Controller/customerGigView.php';
 
                 <ul id="myUL">
                 <?php
-                foreach($allAvailableGigs as $gigs)
+                if(!empty($allAvailableGigs))
+                {
+                    foreach($allAvailableGigs as $gigs)
                 {
                 echo '<li><a href="#">
                         <div class = "result">
                         <div class = "left">
                         <h3>'.$gigs['username'].'</h3>
-                        
-                        
+
                         <p>'.$gigs['title'].'<p>
                         
                         <h5>'."Car Type: ".$gigs['car_type'].'</h5>
@@ -56,25 +57,17 @@ require '../Controller/customerGigView.php';
                         </div>
                         </div>
                         </a></li>';}
+                }
+                else
+                {
+                        echo "0 results";
+                }
+                
+                
                 ?>
                 </ul>
             </section>
             
-    <h1>Total Gigs: <?php  echo count($allAvailableGigs); ?></h1>
-    <?php
-        echo '<div class="gigs-section">';
-        foreach($allAvailableGigs as $gigs)
-        {
-            echo '<div class = "item">';
-            echo "<h3>" . $gigs['title'] . "</h3>";
-            // echo "<br>";
-            echo "<h5>" . "Car Type: " . $gigs['car_type'] . "</h5>";
-            echo "<h2>" . "Hourly Rate: " . $gigs['hourly_rate'] . "</h2>";
-            echo "<div>" . "<form action='../Controller/customerGigView.php' method='POST' ><input type='hidden' name='g_id' value='" .$gigs['g_id'] . "'> <input type='submit' name='request' value='Send Request'>" . "</form></div>";
-            echo "</div>";
-        }
-        echo '</div>';
-        print_r($_SESSION);
-        ?>
+    
 </body>
 </html>
